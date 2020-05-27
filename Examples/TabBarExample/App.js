@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TabBarIOS,
   NavigatorIOS,
   TouchableOpacity,
 } from 'react-native';
@@ -76,96 +75,6 @@ class ColoredView extends PureComponent {
           </View>
         </TouchableOpacity>
       </View>
-    );
-  }
-}
-
-export default class TabBarExample extends PureComponent {
-  state = {
-    selectedTab: 'home',
-  };
-
-  componentDidMount() {
-    // https://github.com/facebook/react-native/issues/1403 prevents this to work for initial load
-    Icon.getImageSource('ios-settings', 30).then(source =>
-      this.setState({ gearIcon: source })
-    );
-  }
-
-  renderContent(color, pageText) {
-    if (!this.state.gearIcon) {
-      return false;
-    }
-    const props = { color, pageText };
-    return (
-      <NavigatorIOS
-        style={styles.navigator}
-        initialRoute={{
-          component: ColoredView,
-          passProps: props,
-          title: pageText,
-          rightButtonIcon: this.state.gearIcon,
-        }}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <TabBarIOS tintColor="black" barTintColor="#3abeff">
-        <Icon.TabBarItemIOS
-          title="Home"
-          iconName="ios-home"
-          selected={this.state.selectedTab === 'home'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'home',
-            });
-          }}
-        >
-          {this.renderContent('#414A8C', 'Home')}
-        </Icon.TabBarItemIOS>
-        <Icon.TabBarItemIOS
-          title="Outline"
-          iconName="ios-checkbox-outline"
-          selectedIconName="ios-checkbox"
-          selected={this.state.selectedTab === 'checkbox'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'checkbox',
-            });
-          }}
-        >
-          {this.renderContent('#090', 'Outline')}
-        </Icon.TabBarItemIOS>
-        <Icon.TabBarItemIOS
-          title="Starred"
-          iconName="ios-star"
-          selected={this.state.selectedTab === 'starred'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'starred',
-            });
-          }}
-        >
-          {this.renderContent('#900', 'Starred')}
-        </Icon.TabBarItemIOS>
-        <Icon.TabBarItemIOS
-          title="Settings"
-          iconName="ios-settings"
-          iconColor="#ffffff"
-          selectedIconColor="#000099"
-          selected={this.state.selectedTab === 'settings'}
-          renderAsOriginal
-          onPress={() => {
-            this.setState({
-              selectedTab: 'settings',
-            });
-          }}
-        >
-          {this.renderContent('#009', 'Settings')}
-        </Icon.TabBarItemIOS>
-      </TabBarIOS>
     );
   }
 }
